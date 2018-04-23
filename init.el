@@ -49,17 +49,24 @@
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
 
+;; Python indent is 3
+(setq python-indent-offset 3)
+
+
 ;; Activate windmove keybindings
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
-;; Use super key like i3
+
+
+;; Window switching keybindings (like i3)
 (global-set-key (kbd "C-s-j")  'windmove-left)
 (global-set-key (kbd "C-s-ø") 'windmove-right)
 (global-set-key (kbd "C-s-;") 'windmove-right)
 (global-set-key (kbd "C-s-l")    'windmove-up)
 (global-set-key (kbd "C-s-k")  'windmove-down)
 
-;; Window resizing keybindings
+
+;; Window resizing keybindings (like i3)
 (global-set-key (kbd "C-M-s-j") 'shrink-window-horizontally)
 (global-set-key (kbd "C-M-s-ø") 'enlarge-window-horizontally)
 (global-set-key (kbd "C-M-s-;") 'enlarge-window-horizontally)
@@ -71,13 +78,21 @@
 (setq backup-directory-alist
       `(("." . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
-      `(("." ,temporary-file-directory nil)))
+      `(("^(.+\/)" ,temporary-file-directory nil)))
 
 
-;;;; Uncomment this to use win-switch
-;; (require 'win-switch)
-;; (global-set-key "\C-xo" 'win-switch-dispatch)
-;; (setq win-switch-idle-time 2)
+;; Toggle between beginning-of-indentation and beginning-of-line when pressing C-a
+(defun move-smart-beginning-of-line ()
+  "Move point to `beginning-of-line'. If repeat command it cycle
+position between `back-to-indentation' and `beginning-of-line'."
+  (interactive "^")
+  (if (eq last-command 'move-smart-beginning-of-line)
+      (if (= (line-beginning-position) (point))
+	  (back-to-indentation)
+	(beginning-of-line)) ; inner else
+    (back-to-indentation))) ; outer else
+
+(global-set-key (kbd "C-a") 'move-smart-beginning-of-line)
 
 
 ;; clang-format
