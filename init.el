@@ -35,10 +35,15 @@
 (set-frame-font "Consolas-12.5")
 
 
+;; Highlight matching parentheses
+(show-paren-mode 1)
+
+
 ;; No indentation within namespaces in c++-mode
-(defun my-c-setup ()
-   (c-set-offset 'innamespace [0]))
-(add-hook 'c++-mode-hook 'my-c-setup)
+(defun my-cpp-setup ()
+  (c-set-offset 'innamespace [0]))
+(add-hook 'c++-mode-hook 'my-cpp-setup)
+
 
 ;; Open headers in c++-mode
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
@@ -66,7 +71,7 @@
 (setq backup-directory-alist
       `(("." . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
-      `(("." ,temporary-file-directory t)))
+      `(("." ,temporary-file-directory nil)))
 
 
 ;;;; Uncomment this to use win-switch
