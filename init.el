@@ -13,7 +13,7 @@
 
 
 ;; Auto install packages
-(dolist (package '(package clang-format ggtags))
+(dolist (package '(package clang-format ggtags sr-speedbar auto-complete))
  (unless (package-installed-p package)
    (package-install package)))
 
@@ -39,7 +39,7 @@
 (show-paren-mode 1)
 
 
-;; No indentation within namespaces in c++-mode
+;; No indentation within namespaces in c++-mode, open speedbar automatically
 (defun my-cpp-setup ()
   (c-set-offset 'innamespace [0]))
 (add-hook 'c++-mode-hook 'my-cpp-setup)
@@ -115,3 +115,36 @@ position between `back-to-indentation' and `beginning-of-line'."
 (define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
 (define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
 (define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
+
+
+;; sr-speedbar and keybinding
+(require 'sr-speedbar)
+(global-set-key (kbd "C-c b t") 'sr-speedbar-toggle)
+(global-set-key (kbd "C-c b u") (lambda() (interactive) (sr-speedbar-refresh)) ) ; update
+(setq sr-speedbar-width 30)
+(setq sr-speedbar-right-side nil)
+
+
+;; auto completion
+(require 'auto-complete)
+(require 'auto-complete-config)
+(ac-config-default)
+(setq ac-use-quick-help t)
+(setq ac-delay 0.2)
+(setq ac-auto-show-menu t)
+
+
+;; ;; company (autocompletion)
+;; (require 'company)
+;; (add-hook 'after-init-hook 'global-company-mode)
+;; (setq company-backends (delete 'company-semantic company-backends))
+;; (define-key c-mode-map  [(tab)] 'company-complete)
+;; (define-key c++-mode-map  [(tab)] 'company-complete)
+
+
+;; ;; irony-mode C++ autocompletion
+;; (require 'irony)
+;; (add-hook 'c++-mode-hook 'irony-mode)
+;; (add-hook 'c-mode-hook 'irony-mode)
+;; (add-hook 'objc-mode-hook 'irony-mode)
+;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
