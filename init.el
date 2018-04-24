@@ -78,7 +78,7 @@
 (setq backup-directory-alist
       `(("." . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
-      `(("^(.+\/)" ,temporary-file-directory nil)))
+      `(("^.+\\/" ,temporary-file-directory t))) 
 
 
 ;; Toggle between beginning-of-indentation and beginning-of-line when pressing C-a
