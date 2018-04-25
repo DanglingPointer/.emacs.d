@@ -13,7 +13,7 @@
 
 
 ;; Auto install packages
-(dolist (package '(package clang-format ggtags sr-speedbar auto-complete))
+(dolist (package '(package clang-format ggtags sr-speedbar auto-complete jedi epc deferred python-environment ctable flycheck))
  (unless (package-installed-p package)
    (package-install package)))
 
@@ -23,7 +23,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(package-selected-packages
+   (quote
+    (flycheck jedi auto-complete sr-speedbar ggtags clang-format))))
 
 
 ;; Load theme: zenburn/flatland/busybee
@@ -134,6 +136,31 @@ position between `back-to-indentation' and `beginning-of-line'."
 (setq ac-auto-show-menu t)
 
 
+;; Python autocompletion (to go to definition: M-x j-def)
+;; run M-x jedi:install-server
+;; install virtualenv
+;; pip install jedi
+;; pip install epc
+;; pip install argparse
+(require 'ctable)
+(require 'deferred)
+(require 'epc)
+(require 'python-environment)
+(require 'jedi)
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
+
+
+;; Lint
+;; For python: pip install flake8
+(require 'flycheck)
+(add-hook 'python-mode-hook (lambda ()			     
+			      (setq flycheck-flake8rc "/home/mikhailv/.config/flake8/setup.cfg")
+			      (flycheck-mode 1)))
+(add-hook 'c-mode-common-hook (lambda ()
+				(flycheck-mode 1)))
+
+
 ;; ;; company (autocompletion)
 ;; (require 'company)
 ;; (add-hook 'after-init-hook 'global-company-mode)
@@ -148,3 +175,9 @@ position between `back-to-indentation' and `beginning-of-line'."
 ;; (add-hook 'c-mode-hook 'irony-mode)
 ;; (add-hook 'objc-mode-hook 'irony-mode)
 ;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
