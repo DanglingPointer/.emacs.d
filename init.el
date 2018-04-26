@@ -98,6 +98,8 @@ position between `back-to-indentation' and `beginning-of-line'."
 
 
 ;; clang-format
+;; Requires:
+;; sudo apt install clang-format-5.0
 (load "/home/mikhailv/.emacs.d/elpa/clang-format-20180406.814/clang-format.el")
 (require 'clang-format)
 (setq clang-format-style-option "file")
@@ -106,6 +108,8 @@ position between `back-to-indentation' and `beginning-of-line'."
 
 
 ;; ggtags-mode (automatically on for c, c++ and java)
+;; Requires:
+;; sudo apt install global
 (require 'ggtags)
 (add-hook 'c-mode-common-hook
           (lambda ()
@@ -137,8 +141,9 @@ position between `back-to-indentation' and `beginning-of-line'."
 
 
 ;; Python autocompletion (to go to definition: M-x j-def)
-;; run M-x jedi:install-server
-;; install virtualenv
+;; Requires:
+;; M-x jedi:install-server
+;; sudo apt install python3-virtualenv
 ;; pip install jedi
 ;; pip install epc
 ;; pip install argparse
@@ -152,6 +157,7 @@ position between `back-to-indentation' and `beginning-of-line'."
 
 
 ;; Lint
+;; Requires:
 ;; For python: pip install flake8
 (require 'flycheck)
 (add-hook 'python-mode-hook (lambda ()			     
@@ -175,9 +181,3 @@ position between `back-to-indentation' and `beginning-of-line'."
 ;; (add-hook 'c-mode-hook 'irony-mode)
 ;; (add-hook 'objc-mode-hook 'irony-mode)
 ;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
