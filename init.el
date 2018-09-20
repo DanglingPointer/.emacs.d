@@ -13,7 +13,7 @@
 
 
 ;; Auto install packages
-(dolist (package '(package clang-format ggtags sr-speedbar auto-complete jedi epc deferred python-environment ctable flycheck))
+(dolist (package '(package clang-format ggtags sr-speedbar auto-complete jedi epc deferred python-environment ctable flycheck rtags company company-rtags))
  (unless (package-installed-p package)
    (package-install package)))
 
@@ -25,7 +25,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (flycheck jedi auto-complete sr-speedbar ggtags clang-format))))
+    (company-rtags company rtags flycheck jedi auto-complete sr-speedbar ggtags clang-format))))
 
 
 ;; Load theme: zenburn/flatland/busybee
@@ -34,7 +34,7 @@
 
 
 ;; Set Consolas font
-(set-frame-font "Consolas-12.5")
+(set-frame-font "Consolas-11.5")
 
 
 ;; Highlight matching parentheses
@@ -53,6 +53,17 @@
 
 ;; Python indent is 3
 (setq python-indent-offset 3)
+
+
+;; C, C++ and Java offset
+(setq-default c-basic-offset 4)
+
+
+;; highlight trailing whitespace
+;; run M-x load-file .emacs.d/highlight-chars/highlight-chars.el
+(require 'highlight-chars)
+(add-hook 'font-lock-mode-hook 'hc-highlight-tabs)
+(add-hook 'font-lock-mode-hook 'hc-highlight-trailing-whitespace)
 
 
 ;; Activate windmove keybindings
@@ -80,7 +91,7 @@
 (setq backup-directory-alist
       `(("." . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
-      `(("^.*\\/" ,temporary-file-directory t))) 
+      `(("^.*\\/" ,temporary-file-directory t)))
 
 
 ;; Toggle between beginning-of-indentation and beginning-of-line when pressing C-a
@@ -90,37 +101,37 @@ position between `back-to-indentation' and `beginning-of-line'."
   (interactive "^")
   (if (eq last-command 'move-smart-beginning-of-line)
       (if (= (line-beginning-position) (point))
-	  (back-to-indentation)
-	(beginning-of-line)) ; inner else
+          (back-to-indentation)
+        (beginning-of-line)) ; inner else
     (back-to-indentation))) ; outer else
 
 (global-set-key (kbd "C-a") 'move-smart-beginning-of-line)
 
 
-;; clang-format
-;; Requires:
-;; sudo apt install clang-format-5.0
-(load "/home/mikhailv/.emacs.d/elpa/clang-format-20180406.814/clang-format.el")
-(require 'clang-format)
-(setq clang-format-style-option "file")
-(setq clang-format-executable "clang-format-5.0")
-(global-set-key [C-M-tab] 'clang-format-buffer)
+;; ;; clang-format
+;; ;; Requires:
+;; ;; sudo apt install clang-format-5.0
+;; (load "/home/mikhailv/.emacs.d/elpa/clang-format-20180406.814/clang-format.el")
+;; (require 'clang-format)
+;; (setq clang-format-style-option "file")
+;; (setq clang-format-executable "clang-format-5.0")
+;; (global-set-key [C-M-tab] 'clang-format-buffer)
 
 
-;; ggtags-mode (automatically on for c, c++ and java)
-;; Requires:
-;; sudo apt install global
-(require 'ggtags)
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
-              (ggtags-mode 1))))
-(define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-other-symbol)
-(define-key ggtags-mode-map (kbd "C-c g h") 'ggtags-view-tag-history)
-(define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
-(define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
-(define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
-(define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
+;; ;; ggtags-mode (automatically on for c, c++ and java)
+;; ;; Requires:
+;; ;; sudo apt install global
+;; (require 'ggtags)
+;; (add-hook 'c-mode-common-hook
+;;           (lambda ()
+;;             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
+;;               (ggtags-mode 1))))
+;; (define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-other-symbol)
+;; (define-key ggtags-mode-map (kbd "C-c g h") 'ggtags-view-tag-history)
+;; (define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
+;; (define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
+;; (define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
+;; (define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
 
 
 ;; sr-speedbar and keybinding
@@ -131,48 +142,74 @@ position between `back-to-indentation' and `beginning-of-line'."
 (setq sr-speedbar-right-side nil)
 
 
-;; auto completion
-(require 'auto-complete)
-(require 'auto-complete-config)
-(ac-config-default)
-(setq ac-use-quick-help t)
-(setq ac-delay 0.2)
-(setq ac-auto-show-menu t)
+;; ;; auto completion
+;; (require 'auto-complete)
+;; (require 'auto-complete-config)
+;; (ac-config-default)
+;; (setq ac-use-quick-help t)
+;; (setq ac-delay 0.2)
+;; (setq ac-auto-show-menu t)
 
 
-;; Python autocompletion (to go to definition: M-x j-def)
-;; Requires:
-;; M-x jedi:install-server
-;; sudo apt install python3-virtualenv
-;; pip install jedi
-;; pip install epc
-;; pip install argparse
-(require 'ctable)
-(require 'deferred)
-(require 'epc)
-(require 'python-environment)
-(require 'jedi)
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
+;; RTAGS
+(require 'rtags)
+(setq rtags-autostart-diagnostics t)
+(setq rtags-completions-enabled t)
+;; (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
+;; (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
+;; (add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
+
+(add-hook 'c-mode-common-hook (lambda ()
+				(rtags-start-process-unless-running)
+				(rtags-enable-standard-keybindings)
+				(global-set-key (kbd "M-.") 'rtags-find-symbol-at-point)
+				(global-set-key (kbd "M-,") 'rtags-find-references-at-point)
+				(global-set-key (kbd "C-c r {") 'rtags-previous-match)
+				(global-set-key (kbd "C-c r }") 'rtags-next-match)
+				(rtags-diagnostics)
+				(push 'company-rtags company-backends)
+                                (setq indent-tabs-mode nil)
+				))
+
+
+;; company (autocompletion)
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+(setq company-backends (delete 'company-semantic company-backends))
+(define-key c-mode-map  [(tab)] 'company-complete)
+(define-key c++-mode-map  [(tab)] 'company-complete)
+
+
+
+;; TODO from here: https://github.com/Andersbakken/rtags#code-completion-in-emacs
+
+
+;; ;; Python autocompletion (to go to definition: M-x j-def)
+;; ;; Requires:
+;; ;; M-x jedi:install-server
+;; ;; sudo apt install python3-virtualenv
+;; ;; pip install jedi
+;; ;; pip install epc
+;; ;; pip install argparse
+;; (require 'ctable)
+;; (require 'deferred)
+;; (require 'epc)
+;; (require 'python-environment)
+;; (require 'jedi)
+;; (add-hook 'python-mode-hook 'jedi:setup)
+;; (setq jedi:complete-on-dot t)
 
 
 ;; Lint
 ;; Requires:
 ;; For python: pip install flake8
 (require 'flycheck)
-(add-hook 'python-mode-hook (lambda ()			     
+(add-hook 'python-mode-hook (lambda ()
 			      (setq flycheck-flake8rc "/home/mikhailv/.config/flake8/setup.cfg")
-			      (flycheck-mode 1)))
-(add-hook 'c-mode-common-hook (lambda ()
-				(flycheck-mode 1)))
-
-
-;; ;; company (autocompletion)
-;; (require 'company)
-;; (add-hook 'after-init-hook 'global-company-mode)
-;; (setq company-backends (delete 'company-semantic company-backends))
-;; (define-key c-mode-map  [(tab)] 'company-complete)
-;; (define-key c++-mode-map  [(tab)] 'company-complete)
+			      (flycheck-mode 1)
+                              (setq indent-tabs-mode t)))
+;; (add-hook 'c-mode-common-hook (lambda ()
+;; 				(flycheck-mode 1)))
 
 
 ;; ;; irony-mode C++ autocompletion
