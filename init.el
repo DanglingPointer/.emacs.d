@@ -34,7 +34,7 @@
 
 
 ;; Set Consolas font
-(set-frame-font "Consolas-11.5")
+(set-frame-font "Consolas-15")
 
 
 ;; Highlight matching parentheses
@@ -61,6 +61,7 @@
 
 ;; highlight trailing whitespace
 ;; run M-x load-file .emacs.d/highlight-chars/highlight-chars.el
+(load "~/.emacs.d/highlight-chars/highlight-chars.el")
 (require 'highlight-chars)
 (add-hook 'font-lock-mode-hook 'hc-highlight-tabs)
 (add-hook 'font-lock-mode-hook 'hc-highlight-trailing-whitespace)
