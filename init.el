@@ -63,8 +63,8 @@
 ;; run M-x load-file .emacs.d/highlight-chars/highlight-chars.el
 (load "~/.emacs.d/highlight-chars/highlight-chars.el")
 (require 'highlight-chars)
-(add-hook 'font-lock-mode-hook 'hc-highlight-tabs)
-(add-hook 'font-lock-mode-hook 'hc-highlight-trailing-whitespace)
+(add-hook 'c-mode-common-hook 'hc-highlight-tabs)
+(add-hook 'c-mode-common-hook 'hc-highlight-trailing-whitespace)
 
 
 ;; Activate windmove keybindings
