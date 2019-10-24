@@ -33,8 +33,8 @@
 (load-theme 'zenburn t)
 
 
-;; Set Consolas font
-(set-frame-font "Consolas-15")
+;; ;; Set Consolas font
+;; (set-frame-font "Consolas-15")
 
 
 ;; Highlight matching parentheses
@@ -152,37 +152,34 @@ position between `back-to-indentation' and `beginning-of-line'."
 ;; (setq ac-auto-show-menu t)
 
 
-;; RTAGS
-(require 'rtags)
-(setq rtags-autostart-diagnostics t)
-(setq rtags-completions-enabled t)
-;; (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
-;; (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
-;; (add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
+;; ;; RTAGS
+;; (require 'rtags)
+;; (setq rtags-autostart-diagnostics t)
+;; (setq rtags-completions-enabled t)
+;; ;; (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
+;; ;; (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
+;; ;; (add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
 
-(add-hook 'c-mode-common-hook (lambda ()
-				(rtags-start-process-unless-running)
-				(rtags-enable-standard-keybindings)
-				(global-set-key (kbd "M-.") 'rtags-find-symbol-at-point)
-				(global-set-key (kbd "M-,") 'rtags-find-references-at-point)
-				(global-set-key (kbd "C-c r {") 'rtags-previous-match)
-				(global-set-key (kbd "C-c r }") 'rtags-next-match)
-				(rtags-diagnostics)
-				(push 'company-rtags company-backends)
-                                (setq indent-tabs-mode nil)
-				))
-
-
-;; company (autocompletion)
-(require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
-(setq company-backends (delete 'company-semantic company-backends))
-(define-key c-mode-map  [(tab)] 'company-complete)
-(define-key c++-mode-map  [(tab)] 'company-complete)
+;; (add-hook 'c-mode-common-hook (lambda ()
+;; 				(rtags-start-process-unless-running)
+;; 				(rtags-enable-standard-keybindings)
+;; 				(global-set-key (kbd "M-.") 'rtags-find-symbol-at-point)
+;; 				(global-set-key (kbd "M-,") 'rtags-find-references-at-point)
+;; 				(global-set-key (kbd "C-c r {") 'rtags-previous-match)
+;; 				(global-set-key (kbd "C-c r }") 'rtags-next-match)
+;; 				(rtags-diagnostics)
+;; 				(push 'company-rtags company-backends)
+;;                                 (setq indent-tabs-mode nil)
+;; 				))
 
 
+;; ;; company (autocompletion)
+;; (require 'company)
+;; (add-hook 'after-init-hook 'global-company-mode)
+;; (setq company-backends (delete 'company-semantic company-backends))
+;; (define-key c-mode-map  [(tab)] 'company-complete)
+;; (define-key c++-mode-map  [(tab)] 'company-complete)
 
-;; TODO from here: https://github.com/Andersbakken/rtags#code-completion-in-emacs
 
 
 ;; ;; Python autocompletion (to go to definition: M-x j-def)
@@ -201,14 +198,14 @@ position between `back-to-indentation' and `beginning-of-line'."
 ;; (setq jedi:complete-on-dot t)
 
 
-;; Lint
-;; Requires:
-;; For python: pip install flake8
-(require 'flycheck)
-(add-hook 'python-mode-hook (lambda ()
-			      (setq flycheck-flake8rc "/home/mikhailv/.config/flake8/setup.cfg")
-			      (flycheck-mode 1)
-                              (setq indent-tabs-mode t)))
+;; ;; Lint
+;; ;; Requires:
+;; ;; For python: pip install flake8
+;; (require 'flycheck)
+;; (add-hook 'python-mode-hook (lambda ()
+;; 			      (setq flycheck-flake8rc "/home/mikhailv/.config/flake8/setup.cfg")
+;; 			      (flycheck-mode 1)
+;;                               (setq indent-tabs-mode t)))
 ;; (add-hook 'c-mode-common-hook (lambda ()
 ;; 				(flycheck-mode 1)))
 
