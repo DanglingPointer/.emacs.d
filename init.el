@@ -11,6 +11,10 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
+;; ;; When evaluating for the first time, uncomment these:
+;; (package-refresh-contents)
+;; (package-install 'use-package)
+
 
 ;; Auto install packages
 (dolist (package '(package clang-format ggtags sr-speedbar auto-complete jedi epc deferred python-environment ctable flycheck rtags company company-rtags))
@@ -24,8 +28,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   (quote
-    (company-rtags company rtags flycheck jedi auto-complete sr-speedbar ggtags clang-format))))
+   '(company-rtags company rtags flycheck jedi auto-complete sr-speedbar ggtags clang-format)))
 
 
 ;; Load theme: zenburn/flatland/busybee
