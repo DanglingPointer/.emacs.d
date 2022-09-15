@@ -32,7 +32,7 @@
 
 
 ;; Load theme: zenburn/flatland/busybee
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'custom-theme-load-path "/home/mikhailv/.emacs.d/themes")
 (load-theme 'zenburn t)
 
 
