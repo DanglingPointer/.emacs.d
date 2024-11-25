@@ -3,7 +3,7 @@
 
 
 ;; Show line numbers
-(global-linum-mode t)
+(global-display-line-numbers-mode 1)
 
 
 ;; Add sources
@@ -219,3 +219,9 @@ position between `back-to-indentation' and `beginning-of-line'."
 ;; (add-hook 'c-mode-hook 'irony-mode)
 ;; (add-hook 'objc-mode-hook 'irony-mode)
 ;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
